@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wish</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Outfit:wght@300;500;700&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+
+    <!-- SECTION 1: CREATION FORM -->
+    <section id="create-section" class="screen active">
+        <div class="glass-card">
+            <h1>Create a Birthday Wish ✨</h1>
+            <div class="input-group">
+                <label for="senderName">1. Birthday card prepared by...</label>
+                <input type="text" id="senderName" placeholder="Your Name">
+            </div>
+            <div class="input-group">
+                <label for="recipientName">2. Name of the birthday person...</label>
+                <input type="text" id="recipientName" placeholder="Their Name">
+            </div>
+
+            <div class="input-group checkbox-group">
+                <input type="checkbox" id="photoToggle">
+                <label for="photoToggle">3. Include a photo? (Optional)</label>
+            </div>
+
+            <div class="input-group disabled" id="photoInputGroup">
+                <label for="photoFile">Upload Photo</label>
+                <input type="file" id="photoFile" accept="image/*">
+            </div>
+
+            <button id="createBtn" class="neon-btn">Create Wish & Envelope</button>
+        </div>
+    </section>
+
+    <!-- SECTION 2: ENVELOPE -->
+    <section id="envelope-section" class="screen hidden">
+        <div class="envelope-container" id="envelopeContainer">
+            <div class="envelope">
+                <div class="front"></div>
+                <div class="card">
+                    <div class="text">
+                        <p>Happy Birthday</p>
+                    </div>
+                </div>
+                <div class="back"></div>
+                <div class="lid"></div>
+            </div>
+            <div class="envelope-message">
+                <p class="cursive-text">This gift prepared by <span id="envSender">...</span><br>specially for you</p>
+                <p class="tap-hint">(Tap to open)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: WISH REVEAL -->
+    <section id="wish-section" class="screen hidden">
+        <div class="wish-container">
+            <h1 class="neon-title">Happy Birthday <span id="wishRecipient">Name</span>!</h1>
+
+            <div class="photo-frame hidden" id="wishPhotoContainer">
+                <img id="wishPhoto" src="" alt="Birthday Person">
+            </div>
+
+            <div class="lyrics-container">
+                <p class="animate-textDelay">🎉 Wishing you a day filled with love and joy! 🎈</p>
+                <p class="animate-textDelay type-2">May all your dreams come true.</p>
+            </div>
+
+            <div class="qr-action-area">
+                <button id="generateQrBtn" class="neon-btn small">Generate & Share Neon QR</button>
+            </div>
+
+            <div id="qrModal" class="modal hidden">
+                <div class="modal-content glass-card">
+                    <span class="close-modal">&times;</span>
+                    <h2>Share the Love ❤️</h2>
+                    <div class="neon-heart-frame">
+                        <div id="qrcode"></div>
+                        <div class="heart-overlay"></div>
+                    </div>
+                    <p>Scan to see the wish!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <audio id="bgMusic" loop>
+        <!-- Using a placeholder royalty free happy birthday generic sound or instructions to add one -->
+        <source src="bdy song.mp3"
+            type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
