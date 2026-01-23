@@ -148,32 +148,56 @@ function fireConfetti() {
     });
 }
 
-// QR Generation
+
+
+
+
+// QR generation part
 dom.generateQrBtn.addEventListener('click', () => {
-    dom.qrModal.classList.remove('hidden');
-
-    // Clear previous
-    dom.qrcode.innerHTML = '';
-
-    // Build Share URL
-    const baseUrl = window.location.href.split('?')[0];
-    const params = new URLSearchParams();
-    params.set('sender', state.sender);
-    params.set('recipient', state.recipient);
-    // Note: Photo not included in URL intentionally
-
-    const shareUrl = `${baseUrl}?${params.toString()}`;
-
+  dom.qrModal.classList.remove('hidden');
+  dom.qrcode.innerHTML = '';
+  
+  const baseUrl = window.location.href.split('?')[0];
+  const params = new URLSearchParams();
+  params.set('sender', state.sender);
+  params.set('recipient', state.recipient);
+  
+  // Include photo data if available
+  if (state.photoData) {
+    params.set('photo', state.photoData);
+  }
+  
+  const shareUrl = `${baseUrl}?${params.toString()}`;
+  console.log('Share URL:', shareUrl);
+  
+  try {
     new QRCode(dom.qrcode, {
-        text: shareUrl,
-        width: 200,
-        height: 200,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
+      text: shareUrl,
+      width: 200,
+      height: 200,
+      colorDark: "#000000",         
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
     });
+  } catch (e) {
+    console.error('QRCode error:', e);
+  }
 });
 
-dom.closeModal.addEventListener('click', () => {
-    dom.qrModal.classList.add('hidden');
+// Update the page load logic to handle photo param
+window.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.has('sender') && params.has('recipient')) {
+    state.sender = params.get('sender');
+    state.recipient = params.get('recipient');
+    
+    if (params.has('photo')) {
+      state.photoData = params.get('photo');
+    }
+    
+    // Show envelope directly
+    sections.create.classList.remove('active');
+    sections.create.classList.add('hidden');
+    showEnvelope();
+  }
 });
